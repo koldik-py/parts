@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.sass';
 
-import Sections from './Sections/Sections';
+import MyTable from './sections/MyTable';
 
 function App() {
   return (
     <div className="App df aistr">
-      <Sections />
+      <MyTable />
     </div>
   );
 }

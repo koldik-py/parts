@@ -1,18 +1,40 @@
+import {useContext, useState,} from "react";
 import './table.sass'
 
-const TextBlock = () => {
-	const x = (e) => {
-    console.log(e.key === "Enter")
-  }
+import Panel from "./Panel";
+import testProvider from "./testProvider";
 
+const dataTag = ['p', 'h1', 'h2', 'li'],
+			baseSizeTextarea = 16,
+			baseLineHeight = 1.15;
+
+const TextBlock = () => {
+
+	const [data, id] = useContext(testProvider),
+				[size, setSize] = useState(((baseSizeTextarea * baseLineHeight) * 3) + 10);
+
+	const editSize = (e)  => {
+		if (e.key === "Enter") {
+			setSize(() => (size + (baseSizeTextarea * baseLineHeight)))
+		}
+	}
+
+	const onSelect = (e) => {
+		// const select = e.target.textContent.slice(e.target.selectionStart, e.target.selectionEnd)
+	}
 	return (
-		<div className="box bgg p10">
-      {/*<div className="box__elem"><div className="btn box__btn">H1</div></div>*/}
-      <textarea
-	      className="input__textarea"
-	      onKeyDown={(e) => x(e)}></textarea>
-    </div>
+		<div className="textBlock">
+			<Panel />
+			<textarea className="textBlock__textarea"
+			          style={{height: size}}
+			          value={data.all[id].text}
+			          onChange={e => data.editLine(id, 'text', e.target.value)}
+			          onKeyDown={e => editSize(e)}
+								onContextMenu={e => onSelect(e)}
+			></textarea>
+		</div>
 	)
-}
+};
+
 
 export default TextBlock

@@ -1,12 +1,16 @@
 import './table.sass';
 
 import TextBlock from "./TextBlock";
+import testProvider from "./testProvider";
 
-const Line = () => {
+const Line = ({data, id}) => {
+
 	return (
-		<>
-			<TextBlock></TextBlock>
-		</>
+		<testProvider.Provider value={[data, id]}>
+			<div className='line'>
+				<TextBlock id={id}/>
+			</div>
+		</testProvider.Provider>
 	)
 }
 

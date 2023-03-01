@@ -13,10 +13,14 @@ const dataMain = {
 
 export const setting = {
 	startTag : 'p',
-	defaultTag : ['p', 'h1', 'h2', 'li'],
+	allVar: ['tag', 'text', 'class'],
+	tagData : ['p', 'h1', 'h2', 'li'],
+	textData : ['b', 'i', 'u', 'center'],
+	classData : ['class1', 'class2', 'class3', 'class4'],
 	baseSizeTextarea : 16,
 	baseLineHeight : 1.15
 }
+
 
 
 
@@ -24,16 +28,24 @@ function useHook(data={}) {
 	const [all, setAll] = useState(data)
 
 	function editLine(id, tag, newContent) {
-		setAll(() => ({...all, [id]: {
-			...all[id],
+		setAll(() => (
+			{...all, [id]: {
+				...all[id],
 				[tag] : newContent
-			}}))
+				}
+			}
+		))
 	}
 
+	function addBlock () {
+		setAll(() =>  ({...all, [Object.keys(all).length]:{
+				tag: setting.startTag,
+				text: ''
+			}
+		}))
+	}
 
-
-
-	return {all, editLine}
+	return {all, editLine, addBlock}
 }
 const MyTable = () => {
 	const data = useHook(dataMain);
@@ -45,7 +57,7 @@ const MyTable = () => {
 	return(
 		<div className="table">
 			{lines}
-			<button className="btn btn--add">add</button>
+			<button className="btn btn--add" onClick={e => data.addBlock()}>add</button>
 		</div>
 	)
 }
